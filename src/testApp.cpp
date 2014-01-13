@@ -2,24 +2,22 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-    ofSetBackgroundColor(0, 0, 0);
+    ofBackground(0, 0, 0);
+    sender.setup(HOST, PORT);           //OSC setup (change these params in header)
+    showStats = true;
     
+    //-----------------------------------------------------------
+    //-------------------- Setup box2d --------------------------
+    //-----------------------------------------------------------
+
     box2d.init();
     box2d.setGravity(0, 10);
     box2d.createGround();
     box2d.setFPS(30.0);
-    //box2d.registerGrabbing();
-    
     
     ofAddListener(box2d.contactStartEvents, this, &testApp::contactStart);
-    //ofAddListener(box2d.contactEndEvents, this, &testApp::contactEnd);
     
-    sender.setup(HOST, PORT);           //OSC setup (change these params in header)
-    
-    showStats = true;
-    
- 
-    
+    //build staticCircles
     for(int i = 0; i < numStaticCircles; i++)
     {
         float radius = ofRandom(20.0, 100.0);
@@ -31,17 +29,17 @@ void testApp::setup(){
             float prevXPos = staticCircles[j].getPosition().x;
             float prevYPos = staticCircles[j].getPosition().y;
             
+            //make sure staticCircles are not touching
             while(xPos+radius > prevXPos - prevRad && xPos-radius < prevXPos + prevRad)
             {
                 xPos = ofRandom(0+radius, ofGetWidth() - radius);
             }
-            
             while((yPos+radius > prevYPos - prevRad) && (yPos-radius < prevYPos + prevRad))
             {
                 yPos = ofRandom(40+radius, ofGetHeight() - radius);
             }
         }
-
+        //setup static circle location, fixture and color
         staticCircles[i].setPhysics(0.0, 0.70, 0.5);
         staticCircles[i].setup(box2d.getWorld(), xPos, yPos, radius);
         staticCircles[i].setData(&staticCircles[i].radius);
@@ -50,6 +48,38 @@ void testApp::setup(){
         staticCircles[i].color.b = (int)ofRandom(100, 150);
         
     }
+
+    //--------------------------------------------------------------
+    //--------------------Setup SuperCollider-----------------------
+    //--------------------------------------------------------------
+	// Create a SuperCollider synth with default parameters
+	// and spawn it on the server.
+	//--------------------------------------------------------------
+	synth = new ofxSCSynth("sine_harmonic");
+	synth->create();
+    
+	//--------------------------------------------------------------
+	// Load up a buffer with a sound file, and route its playback
+	// to an fx unit via a 2-channel audio bus.
+	//--------------------------------------------------------------
+	buffer = new ofxSCBuffer();
+	buffer->read(ofToDataPath("bell.aif", true));
+	
+	bus = new ofxSCBus(2);
+    
+	playbuf = new ofxSCSynth("playbuf_1");
+	playbuf->set("bufnum", buffer->index);
+	playbuf->set("outbus", bus->index);
+	
+	delay = new ofxSCSynth("fx_delay");
+	delay->set("wet", 0.4);
+	delay->set("delaytime", 0.4);
+	delay->set("decaytime", 4);
+	delay->set("inbus", bus->index);
+	delay->set("outbus", 0);
+	delay->addToTail();
+	
+
     
     
 }
@@ -62,15 +92,17 @@ void testApp::contactStart(ofxBox2dContactArgs &e)
                 
         if(e.a->GetType() == b2Shape::e_circle && e.b->GetType() == b2Shape::e_circle)
         {
-            ofLog() << "userdataA: " << *((float*)(e.a->GetBody()->GetUserData())); //print userdata of body      
-            ofLog() << "userdataB: " << *((float*)(e.b->GetBody()->GetUserData())); //print userdata of body
+            //ofLog() << "userdataA: " << *((float*)(e.a->GetBody()->GetUserData())); //print userdata of body
+            //ofLog() << "userdataB: " << *((float*)(e.b->GetBody()->GetUserData())); //print userdata of body
           
             float velocityB = e.b->GetBody()->GetLinearVelocity().Length();
             float velocityA = e.a->GetBody()->GetLinearVelocity().Length();
+            
+            velocityA = ofMap(velocityA, 0.0, 60.0, 0.0, 1.0);
 
             
 //------------------------build OSC messages---------------------------------
-            
+   /*
             ofxOscMessage a;                                    //set up a new message
             a.setAddress("/bodyA");                              //initial param of message
             a.addFloatArg(*((float*)e.a->GetBody()->GetUserData()));    //add radius from body.a
@@ -82,6 +114,10 @@ void testApp::contactStart(ofxBox2dContactArgs &e)
             b.addFloatArg(*((float*)e.b->GetBody()->GetUserData()));    //add (radius) from body.b
             b.addFloatArg(velocityB);                           //add velocity of body.b
             sender.sendMessage(b);
+    */
+            
+            synth->set("freq", *((float*)e.b->GetBody()->GetUserData())*2);
+            synth->set("amp", 1.0f);
         }
     }
 }
@@ -106,9 +142,20 @@ void testApp::update(){
     
 }
 
+testApp::~testApp()
+{
+	//--------------------------------------------------------------
+	// Free synths and buffers when we're done - otherwise
+	// they'll hang about on SC server, occupying CPU and memory.
+	//--------------------------------------------------------------
+	synth->free();
+	delay->free();
+	buffer->free();
+	bus->free();
+}
+
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofSetBackgroundColor(0, 0, 0);
     ofSetCircleResolution(22);
     for(int i = 0; i < circles.size(); i++)
     {
@@ -155,11 +202,43 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
+    //--------------------------------------------------------------
+	// Modulate synth params based on mouse position.
+	//--------------------------------------------------------------
+	
+	if (button == 0)
+	{
+		synth->set("freq", x + 40);
+		synth->set("amp", 1.0f - (float) y / ofGetHeight());
+		synth->set("pan", (float) x / ofGetHeight() - 0.5f);
+        
+		ofSetColor(255, 255, 255, 100);
+		ofCircle(x, y, 10 * (1.0 - (float) y / ofGetHeight()));
+	}
+
 
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
+    //--------------------------------------------------------------
+	// Trigger stuff. Press right mouse button for bells.
+	//--------------------------------------------------------------
+	
+	if (button == 0)
+	{
+		this->mouseDragged(x, y, button);
+		synth->set("amp", 0.8f);
+	}
+	else if (button == 2)
+	{
+		playbuf->set("rate", 2.0f * x / ofGetWidth());
+		playbuf->grain();
+		
+		ofSetColor(255, 255, 0, 200);
+		ofTriangle(x, y - 10, x + 10, y + 10, x - 10, y + 10);
+	}
+
     
     for(int i = 0; i < numStaticCircles; i++)
     {
@@ -181,7 +260,15 @@ void testApp::mousePressed(int x, int y, int button){
                 circle.setData(&circles.at(circles.size()-1).radius);       //setData to reference of radius of last added circle
  
             }
+            
+            float hitVel = 10.0;
+            ofxOscMessage tap;                                    //set up a new message
+            tap.setAddress("/mouseHit");
+            tap.addFloatArg(staticCircles[i].radius);          //add (radius) from circ
+            tap.addFloatArg(hitVel);                           //add velocity of hit (will come from piezo)
+            sender.sendMessage(tap);
         }
+
     }
     
     
@@ -190,6 +277,7 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
+    synth->set("amp", 0.1f);
 
 }
 

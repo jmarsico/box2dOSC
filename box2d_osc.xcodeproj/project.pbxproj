@@ -55,6 +55,13 @@
 		BB885F5F39C8DA070D80EF02 /* b2BlockAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A76D962905D0BA4DE02320A5 /* b2BlockAllocator.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		BFD2A0EEBE3B4153659EC355 /* b2Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBCA857DA9C5F92BF720A6C8 /* b2Contact.cpp */; };
+		C1D87CF1188473CB00C41405 /* ofxSCBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CDD188473CB00C41405 /* ofxSCBuffer.cpp */; };
+		C1D87CF2188473CB00C41405 /* ofxSCBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CDF188473CB00C41405 /* ofxSCBus.cpp */; };
+		C1D87CF3188473CB00C41405 /* ofxSCGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CE1188473CB00C41405 /* ofxSCGroup.cpp */; };
+		C1D87CF4188473CB00C41405 /* ofxSCNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CE3188473CB00C41405 /* ofxSCNode.cpp */; };
+		C1D87CF5188473CB00C41405 /* ofxSCResourceAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CE5188473CB00C41405 /* ofxSCResourceAllocator.cpp */; };
+		C1D87CF6188473CB00C41405 /* ofxSCServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CE7188473CB00C41405 /* ofxSCServer.cpp */; };
+		C1D87CF7188473CB00C41405 /* ofxSCSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C1D87CE9188473CB00C41405 /* ofxSCSynth.cpp */; };
 		C3D8EF14A387EA959014AD91 /* b2ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14F573EB8A3C9D93203E1F20 /* b2ContactManager.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		CB503B33759F22A302B8FC6E /* b2Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FD632883052641C31C9444 /* b2Settings.cpp */; };
@@ -212,6 +219,21 @@
 		BCCD69F7BE28DA5483CC6DB5 /* b2World.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2World.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/b2World.cpp; sourceTree = SOURCE_ROOT; };
 		C0D30BC2DB9B439EAD5EE777 /* assert.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = assert.hpp; path = ../../../addons/ofxBox2d/libs/triangle/assert.hpp; sourceTree = SOURCE_ROOT; };
 		C1643EA6187F34D700988DA9 /* newCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newCircle.h; sourceTree = "<group>"; };
+		C1D87CDD188473CB00C41405 /* ofxSCBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCBuffer.cpp; sourceTree = "<group>"; };
+		C1D87CDE188473CB00C41405 /* ofxSCBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCBuffer.h; sourceTree = "<group>"; };
+		C1D87CDF188473CB00C41405 /* ofxSCBus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCBus.cpp; sourceTree = "<group>"; };
+		C1D87CE0188473CB00C41405 /* ofxSCBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCBus.h; sourceTree = "<group>"; };
+		C1D87CE1188473CB00C41405 /* ofxSCGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCGroup.cpp; sourceTree = "<group>"; };
+		C1D87CE2188473CB00C41405 /* ofxSCGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCGroup.h; sourceTree = "<group>"; };
+		C1D87CE3188473CB00C41405 /* ofxSCNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCNode.cpp; sourceTree = "<group>"; };
+		C1D87CE4188473CB00C41405 /* ofxSCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCNode.h; sourceTree = "<group>"; };
+		C1D87CE5188473CB00C41405 /* ofxSCResourceAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCResourceAllocator.cpp; sourceTree = "<group>"; };
+		C1D87CE6188473CB00C41405 /* ofxSCResourceAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCResourceAllocator.h; sourceTree = "<group>"; };
+		C1D87CE7188473CB00C41405 /* ofxSCServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCServer.cpp; sourceTree = "<group>"; };
+		C1D87CE8188473CB00C41405 /* ofxSCServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCServer.h; sourceTree = "<group>"; };
+		C1D87CE9188473CB00C41405 /* ofxSCSynth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSCSynth.cpp; sourceTree = "<group>"; };
+		C1D87CEA188473CB00C41405 /* ofxSCSynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSCSynth.h; sourceTree = "<group>"; };
+		C1D87CEB188473CB00C41405 /* ofxSuperCollider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSuperCollider.h; sourceTree = "<group>"; };
 		C2613E67C51FDE6F55873E38 /* ofxBox2dRect.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBox2dRect.cpp; path = ../../../addons/ofxBox2d/src/ofxBox2dRect.cpp; sourceTree = SOURCE_ROOT; };
 		C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
 		C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
@@ -501,6 +523,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				C1D87CC3188473CB00C41405 /* ofxSuperCollider */,
 				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
 				BD1B24C549BFA7D54BC59DE3 /* ofxBox2d */,
 			);
@@ -563,6 +586,36 @@
 				9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */,
 			);
 			name = src;
+			sourceTree = "<group>";
+		};
+		C1D87CC3188473CB00C41405 /* ofxSuperCollider */ = {
+			isa = PBXGroup;
+			children = (
+				C1D87CDC188473CB00C41405 /* src */,
+			);
+			path = ofxSuperCollider;
+			sourceTree = "<group>";
+		};
+		C1D87CDC188473CB00C41405 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C1D87CDD188473CB00C41405 /* ofxSCBuffer.cpp */,
+				C1D87CDE188473CB00C41405 /* ofxSCBuffer.h */,
+				C1D87CDF188473CB00C41405 /* ofxSCBus.cpp */,
+				C1D87CE0188473CB00C41405 /* ofxSCBus.h */,
+				C1D87CE1188473CB00C41405 /* ofxSCGroup.cpp */,
+				C1D87CE2188473CB00C41405 /* ofxSCGroup.h */,
+				C1D87CE3188473CB00C41405 /* ofxSCNode.cpp */,
+				C1D87CE4188473CB00C41405 /* ofxSCNode.h */,
+				C1D87CE5188473CB00C41405 /* ofxSCResourceAllocator.cpp */,
+				C1D87CE6188473CB00C41405 /* ofxSCResourceAllocator.h */,
+				C1D87CE7188473CB00C41405 /* ofxSCServer.cpp */,
+				C1D87CE8188473CB00C41405 /* ofxSCServer.h */,
+				C1D87CE9188473CB00C41405 /* ofxSCSynth.cpp */,
+				C1D87CEA188473CB00C41405 /* ofxSCSynth.h */,
+				C1D87CEB188473CB00C41405 /* ofxSuperCollider.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		C4343C0396E7683F2F1D5625 /* libs */ = {
@@ -817,6 +870,13 @@
 				A2E6B252D682A7FB048A1644 /* b2RevoluteJoint.cpp in Sources */,
 				87C5C3DED336B7BB4A5D06D6 /* b2WeldJoint.cpp in Sources */,
 				4CC0FD96DE77FF40BBCF8DD8 /* del_impl.cpp in Sources */,
+				C1D87CF1188473CB00C41405 /* ofxSCBuffer.cpp in Sources */,
+				C1D87CF2188473CB00C41405 /* ofxSCBus.cpp in Sources */,
+				C1D87CF3188473CB00C41405 /* ofxSCGroup.cpp in Sources */,
+				C1D87CF4188473CB00C41405 /* ofxSCNode.cpp in Sources */,
+				C1D87CF5188473CB00C41405 /* ofxSCResourceAllocator.cpp in Sources */,
+				C1D87CF6188473CB00C41405 /* ofxSCServer.cpp in Sources */,
+				C1D87CF7188473CB00C41405 /* ofxSCSynth.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

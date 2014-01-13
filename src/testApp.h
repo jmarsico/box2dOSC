@@ -4,6 +4,7 @@
 #include "ofxBox2d.h"
 #include "ofxOsc.h"
 #include "newCircle.h"
+#include "ofxSuperCollider.h"
 
 
 #define HOST "localhost"            //setup the host IP here
@@ -12,6 +13,7 @@
 class testApp : public ofBaseApp{
 
 public:
+    ~testApp();
     void setup();
     void update();
     void draw();
@@ -40,6 +42,13 @@ public:
     
     
     ofxOscSender sender;                    //the OSC sender object
+    
+    ofxSCSynth	*synth;
+	
+    ofxSCSynth	*playbuf;
+    ofxSCBus	*bus;
+    ofxSCSynth	*delay;
+    ofxSCBuffer	*buffer;
     
     
     
