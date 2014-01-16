@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     ofBackground(0, 0, 0);
-    sender.setup(HOST, PORT);           //OSC setup (change these params in header)
+    //sender.setup(HOST, PORT);           //OSC setup (change these params in header)
     showStats = true;
     
     //-----------------------------------------------------------
@@ -55,21 +55,22 @@ void testApp::setup(){
 	// Create a SuperCollider synth with default parameters
 	// and spawn it on the server.
 	//--------------------------------------------------------------
-	synth = new ofxSCSynth("sine_harmonic");
-	synth->create();
+	
+    /*
+    synth = new ofxSCSynth("KlankTest1");
+    synth->create(0, 1);
+     */
+	
     
 	//--------------------------------------------------------------
 	// Load up a buffer with a sound file, and route its playback
 	// to an fx unit via a 2-channel audio bus.
 	//--------------------------------------------------------------
-	buffer = new ofxSCBuffer();
-	buffer->read(ofToDataPath("bell.aif", true));
 	
+	/*
 	bus = new ofxSCBus(2);
     
-	playbuf = new ofxSCSynth("playbuf_1");
-	playbuf->set("bufnum", buffer->index);
-	playbuf->set("outbus", bus->index);
+
 	
 	delay = new ofxSCSynth("fx_delay");
 	delay->set("wet", 0.4);
@@ -79,7 +80,7 @@ void testApp::setup(){
 	delay->set("outbus", 0);
 	delay->addToTail();
 	
-
+*/
     
     
 }
@@ -101,23 +102,9 @@ void testApp::contactStart(ofxBox2dContactArgs &e)
             velocityA = ofMap(velocityA, 0.0, 60.0, 0.0, 1.0);
 
             
-//------------------------build OSC messages---------------------------------
-   /*
-            ofxOscMessage a;                                    //set up a new message
-            a.setAddress("/bodyA");                              //initial param of message
-            a.addFloatArg(*((float*)e.a->GetBody()->GetUserData()));    //add radius from body.a
-            a.addFloatArg(velocityA);                           //add velocity of body.a
-            sender.sendMessage(a);                              //send the message
-            
-            ofxOscMessage b;                                    //set up a new message
-            b.setAddress("/bodyB");                              
-            b.addFloatArg(*((float*)e.b->GetBody()->GetUserData()));    //add (radius) from body.b
-            b.addFloatArg(velocityB);                           //add velocity of body.b
-            sender.sendMessage(b);
-    */
-            
-            synth->set("freq", *((float*)e.b->GetBody()->GetUserData())*2);
-            synth->set("amp", 1.0f);
+            synth = new ofxSCSynth("KlankTest1");
+            synth->create();
+            synth->set("freq", 100);
         }
     }
 }
@@ -149,9 +136,6 @@ testApp::~testApp()
 	// they'll hang about on SC server, occupying CPU and memory.
 	//--------------------------------------------------------------
 	synth->free();
-	delay->free();
-	buffer->free();
-	bus->free();
 }
 
 //--------------------------------------------------------------
@@ -202,22 +186,8 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-    //--------------------------------------------------------------
-	// Modulate synth params based on mouse position.
-	//--------------------------------------------------------------
 	
-	if (button == 0)
-	{
-		synth->set("freq", x + 40);
-		synth->set("amp", 1.0f - (float) y / ofGetHeight());
-		synth->set("pan", (float) x / ofGetHeight() - 0.5f);
-        
-		ofSetColor(255, 255, 255, 100);
-		ofCircle(x, y, 10 * (1.0 - (float) y / ofGetHeight()));
 	}
-
-
-}
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
@@ -225,20 +195,8 @@ void testApp::mousePressed(int x, int y, int button){
 	// Trigger stuff. Press right mouse button for bells.
 	//--------------------------------------------------------------
 	
-	if (button == 0)
-	{
-		this->mouseDragged(x, y, button);
-		synth->set("amp", 0.8f);
-	}
-	else if (button == 2)
-	{
-		playbuf->set("rate", 2.0f * x / ofGetWidth());
-		playbuf->grain();
-		
-		ofSetColor(255, 255, 0, 200);
-		ofTriangle(x, y - 10, x + 10, y + 10, x - 10, y + 10);
-	}
-
+	
+	
     
     for(int i = 0; i < numStaticCircles; i++)
     {
@@ -261,12 +219,12 @@ void testApp::mousePressed(int x, int y, int button){
  
             }
             
-            float hitVel = 10.0;
-            ofxOscMessage tap;                                    //set up a new message
-            tap.setAddress("/mouseHit");
-            tap.addFloatArg(staticCircles[i].radius);          //add (radius) from circ
-            tap.addFloatArg(hitVel);                           //add velocity of hit (will come from piezo)
-            sender.sendMessage(tap);
+            synth = new ofxSCSynth("KlankTest1");
+            synth->create();
+            synth->set("freq", 100);
+            //synths.push_back(&synth);
+            
+            
         }
 
     }
@@ -277,7 +235,7 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-    synth->set("amp", 0.1f);
+    //synth->set("amp", 0.1f);
 
 }
 

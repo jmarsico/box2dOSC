@@ -38,7 +38,10 @@ public:
     bool showStats;
         
     ofxBox2d box2d;                         // the box2d world
-    vector  <newCircle> circles;       // default box2d circles
+    vector <newCircle> circles;       // default box2d circles
+    vector <ofxSCSynth> synths;         //vector to hold synths
+    
+    
     
     
     ofxOscSender sender;                    //the OSC sender object
@@ -46,10 +49,7 @@ public:
     ofxSCSynth	*synth;
 	
     ofxSCSynth	*playbuf;
-    ofxSCBus	*bus;
-    ofxSCSynth	*delay;
-    ofxSCBuffer	*buffer;
-    
+     
     
     
 		
